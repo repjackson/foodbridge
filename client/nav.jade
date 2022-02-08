@@ -13,6 +13,10 @@ template(name='nav')
             img.ui.small.image(src="{{c.url 'fblogo' gravity='face' crop='fill'}}")
             
             // span.mobile.hidden foodbridge
+        a.icon.item.zoomer(href="/mission" class="{{isActiveRoute 'mission'}}")
+            // i.large.inbox.icon
+            // +i name='blog'
+            span.mobile.hidden our mission
         a.icon.item.zoomer(href="/posts" class="{{isActiveRoute 'posts'}}")
             // i.large.inbox.icon
             +i name='blog'
@@ -28,7 +32,7 @@ template(name='nav')
         a.icon.item.zoomer(href="/chefs" class="{{isActiveRoute 'chefs'}}")
             // i.large.inbox.icon
             +i name='chef-hat'
-            span.mobile.hidden chefs
+            span.mobile.hidden meet our chefs
         a.icon.item.zoomer(href="/events" class="{{isActiveRoute 'events'}}")
             // i.large.inbox.icon
             +i name='calendar'
@@ -42,6 +46,9 @@ template(name='nav')
         //             i.search.large.icon
         //         input.search_site(type='text' autocomplete="off" value=current_product_search)
         .right.menu
+            if currentUser.admin
+                a.icon.item(href="/admin" class="{{isActiveRoute 'admin'}}")
+                    i.large.shield.icon
             if unread_count
                 a.item.alerts.select_term(href="#" class=alert_toggle_class)
                     i.large.bell.icon
@@ -92,6 +99,10 @@ template(name='nav')
             // i.large.inbox.icon
             +i name='tasks'
             span.mobile.hidden tasks
+        a.icon.item.zoomer(href="/recipes" class="{{isActiveRoute 'recipes'}}")
+            // i.large.inbox.icon
+            +i name='beer-recipe'
+            span.mobile.hidden recipes
 
 template(name='topbar')
     .ui.fluid.large.attached.segment

@@ -1,0 +1,15 @@
+template(name='catering')
+    .ui.header catering
+    
+template(name='admin')
+    .ui.header admin
+    .ui.header pages 
+    
+    
+    
+template(name='doc')
+    with content 
+        |!{content}
+    if currentUser 
+        .ui.icon.button.edit_doc
+            i.large.edit.icon

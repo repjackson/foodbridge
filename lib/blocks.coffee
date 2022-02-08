@@ -629,21 +629,6 @@ if Meteor.isClient
 
 
 
-    Template.add_button.onCreated ->
-        # console.log @
-        Meteor.subscribe 'model_from_slug', @data.model
-    Template.add_button.helpers
-        model: ->
-            data = Template.currentData()
-            Docs.findOne
-                model: 'model'
-                slug: data.model
-    Template.add_button.events
-        'click .add': ->
-            new_id = Docs.insert
-                model: @model
-            Router.go "/m/#{@model}/#{new_id}/edit"
-
 
     Template.remove_button.events
         'click .remove_doc': (e,t)->
@@ -864,3 +849,19 @@ if Meteor.isClient
     
     
     
+
+    Template.add_button.onCreated ->
+        # console.log @
+        Meteor.subscribe 'model_from_slug', @data.model
+    Template.add_button.helpers
+        model: ->
+            data = Template.currentData()
+            Docs.findOne
+                model: 'model'
+                slug: data.model
+    Template.add_button.events
+        'click .add': ->
+            new_id = Docs.insert
+                model: @model
+            Router.go "/#{@model}/#{new_id}/edit"
+
