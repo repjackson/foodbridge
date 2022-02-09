@@ -604,7 +604,7 @@ if Meteor.isServer
 
 
 Meteor.methods
-    'mark_not': (event_id)->
+    mark_not: (event_id)->
         event = Docs.findOne event_id
         if Meteor.userId() in event.not_user_ids
             Docs.update event_id,
@@ -619,7 +619,7 @@ Meteor.methods
                     maybe_user_ids: Meteor.userId()
 
         
-    'mark_maybe': (event_id)->
+    mark_maybe: (event_id)->
         event = Docs.findOne event_id
         if Meteor.userId() in event.maybe_user_ids
             Docs.update event_id,
@@ -633,11 +633,3 @@ Meteor.methods
                     going_user_ids: Meteor.userId()
                     not_user_ids: Meteor.userId()
                     
-                    
-if Meteor.isServer
-    Meteor.publish 'event_tickets', (event_id)->
-        event = Docs.findOne event_id 
-        if event 
-            Docs.find 
-                model:'order'
-                event_id:event_id

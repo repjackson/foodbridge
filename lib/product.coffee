@@ -470,8 +470,21 @@ if Meteor.isClient
         @layout 'layout'
         @render 'products'
         ), name:'products'
+    Router.route '/shop', (->
+        @layout 'layout'
+        @render 'products'
+        ), name:'shop'
+        
+        
+    Template.products.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'product', ->
 
 
+    Template.products.helpers
+        product_docs: ->
+            Docs.find 
+                model:'product'
+                
     Template.product_card.events
         'click .add_to_cart': (e,t)->
             $(e.currentTarget).closest('.card').transition('bounce',500)
