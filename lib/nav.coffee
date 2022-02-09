@@ -1,11 +1,11 @@
 if Meteor.isClient
     Template.nav.onCreated ->
-        @autorun => Meteor.subscribe 'me'
+        @autorun => Meteor.subscribe 'me', ->
         # @autorun => Meteor.subscribe 'all_users'
         
-        # @autorun => Meteor.subscribe 'my_cart'
+        @autorun => Meteor.subscribe 'my_cart', ->
         # @autorun => Meteor.subscribe 'my_cart_order'
-        # @autorun => Meteor.subscribe 'my_cart_products'
+        @autorun => Meteor.subscribe 'my_cart_products', ->
 
     Template.nav.onRendered ->
     Template.nav.events

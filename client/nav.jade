@@ -11,7 +11,7 @@ template(name='nav')
             +i name='rope-bridge'
             // i.large.home.icon
             // img.ui.tiny.image(src="{{c.url 'fblogo' gravity='face' crop='fill'}}")
-            // span.mobile.hidden foodbridge
+            span.mobile.hidden foodbridge
         a.icon.item.zoomer(href="/mission" class="{{isActiveRoute 'mission'}}")
             +i name='mission-of-a-company'
             // i.large.inbox.icon
@@ -29,26 +29,6 @@ template(name='nav')
             // i.large.inbox.icon
             +i name='chef-hat'
             // span.mobile.hidden meet our chefs
-        a.icon.item.zoomer(href="/events" class="{{isActiveRoute 'events'}}")
-            // i.large.inbox.icon
-            +i name='calendar'
-            // span.mobile.hidden events
-        a.icon.item.zoomer(href="/tasks" class="{{isActiveRoute 'tasks'}}")
-            // i.large.inbox.icon
-            +i name='tasks'
-            // span.mobile.hidden tasks
-        a.icon.item.zoomer(href="/recipes" class="{{isActiveRoute 'recipes'}}")
-            // i.large.inbox.icon
-            +i name='beer-recipe'
-            // span.mobile.hidden recipes
-        a.icon.item.zoomer(href="/tribes" class="{{isActiveRoute 'tribes'}}")
-            // i.large.inbox.icon
-            +i name='campfire'
-            // span.mobile.hidden recipes
-        a.icon.item.zoomer(href="/classes" class="{{isActiveRoute 'classes'}}")
-            // i.large.inbox.icon
-            +i name='university'
-            // span.mobile.hidden recipes
         a.icon.item.zoomer(href="/users" class="{{isActiveRoute 'users'}}")
             // i.large.inbox.icon
             +i name='groups'
@@ -73,6 +53,11 @@ template(name='nav')
             else
                 a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
                     i.large.outline.bell.icon
+            if cart_items 
+                .icon.item
+                    i.shopping.cart.icon
+                // each cart_items
+                    
             a.item.zoomer(href="/chat" class="{{isActiveRoute 'chat'}}")
                 // i.large.inbox.icon
                 +i name='chat'
@@ -110,6 +95,27 @@ template(name='nav')
                     span.mobile.hidden login
             if session_is 'viewing_alerts'
                 +topbar
+    .ui.small.attached.menu 
+        a.icon.item.zoomer(href="/tasks" class="{{isActiveRoute 'tasks'}}")
+            // i.large.inbox.icon
+            +i name='tasks'
+            // span.mobile.hidden tasks
+        a.icon.item.zoomer(href="/events" class="{{isActiveRoute 'events'}}")
+            // i.large.inbox.icon
+            +i name='calendar'
+            // span.mobile.hidden events
+        a.icon.item.zoomer(href="/recipes" class="{{isActiveRoute 'recipes'}}")
+            // i.large.inbox.icon
+            +i name='beer-recipe'
+            // span.mobile.hidden recipes
+        a.icon.item.zoomer(href="/tribes" class="{{isActiveRoute 'tribes'}}")
+            // i.large.inbox.icon
+            +i name='campfire'
+            // span.mobile.hidden recipes
+        a.icon.item.zoomer(href="/classes" class="{{isActiveRoute 'classes'}}")
+            // i.large.inbox.icon
+            +i name='university'
+            // span.mobile.hidden recipes
 
 
 
