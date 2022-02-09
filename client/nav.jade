@@ -8,35 +8,43 @@ template(name='nav')
         // a.icon.item.toggle_leftbar
         //     i.large.bars.icon
         a.item.zoomer(href='/' class="{{isActivePath '/'}}" )
-            // +i name='food'
+            +i name='rope-bridge'
             // i.large.home.icon
-            img.ui.small.image(src="{{c.url 'fblogo' gravity='face' crop='fill'}}")
-            
+            // img.ui.tiny.image(src="{{c.url 'fblogo' gravity='face' crop='fill'}}")
             // span.mobile.hidden foodbridge
         a.icon.item.zoomer(href="/mission" class="{{isActiveRoute 'mission'}}")
+            +i name='mission-of-a-company'
             // i.large.inbox.icon
             // +i name='blog'
-            span.mobile.hidden our mission
+            // span.mobile.hidden mission
         a.icon.item.zoomer(href="/posts" class="{{isActiveRoute 'posts'}}")
             // i.large.inbox.icon
             +i name='blog'
-            span.mobile.hidden posts
+            // span.mobile.hidden posts
         a.icon.item.zoomer(href="/products" class="{{isActiveRoute 'products'}}")
             // i.large.inbox.icon
             +i name='shop'
-            span.mobile.hidden products
-        a.icon.item.zoomer(href="/users" class="{{isActiveRoute 'users'}}")
-            // i.large.inbox.icon
-            +i name='groups'
-            span.mobile.hidden community
+            // span.mobile.hidden products
         a.icon.item.zoomer(href="/chefs" class="{{isActiveRoute 'chefs'}}")
             // i.large.inbox.icon
             +i name='chef-hat'
-            span.mobile.hidden meet our chefs
+            // span.mobile.hidden meet our chefs
         a.icon.item.zoomer(href="/events" class="{{isActiveRoute 'events'}}")
             // i.large.inbox.icon
             +i name='calendar'
-            span.mobile.hidden events
+            // span.mobile.hidden events
+        a.icon.item.zoomer(href="/tasks" class="{{isActiveRoute 'tasks'}}")
+            // i.large.inbox.icon
+            +i name='tasks'
+            // span.mobile.hidden tasks
+        a.icon.item.zoomer(href="/recipes" class="{{isActiveRoute 'recipes'}}")
+            // i.large.inbox.icon
+            +i name='beer-recipe'
+            // span.mobile.hidden recipes
+        a.icon.item.zoomer(href="/users" class="{{isActiveRoute 'users'}}")
+            // i.large.inbox.icon
+            +i name='groups'
+            // span.mobile.hidden community
 
         // .search.item.zoomer.mobile.hidden(title='search')
         //     .ui.icon.transparent.input
@@ -94,15 +102,9 @@ template(name='nav')
                     span.mobile.hidden login
             if session_is 'viewing_alerts'
                 +topbar
-    .ui.small.attached.menu 
-        a.icon.item.zoomer(href="/tasks" class="{{isActiveRoute 'tasks'}}")
-            // i.large.inbox.icon
-            +i name='tasks'
-            span.mobile.hidden tasks
-        a.icon.item.zoomer(href="/recipes" class="{{isActiveRoute 'recipes'}}")
-            // i.large.inbox.icon
-            +i name='beer-recipe'
-            span.mobile.hidden recipes
+
+
+
 
 template(name='topbar')
     .ui.fluid.large.attached.segment

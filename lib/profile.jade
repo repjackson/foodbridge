@@ -5,19 +5,19 @@ template(name='user_layout')
         .ui.stackable.padded.grid
             .row
                 .four.wide.column.scrolling
-                    a.ui.fluid.compact.circular.button.fly_left(href='/users')
+                    a.ui.fluid.compact.button.fly_left(href='/users')
                         i.chevron.left.icon
                         +i name='groups'
                         |users
                     .spacer
                     a.item.mobile.hidden(href="/user/#{username}")
-                        img.ui.circular.centered.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
+                        img.ui.centered.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
                     .ui.center.aligned.header.mobile.hidden
                         strong #{name}
                         // strong #{first_name} #{last_name}
                         | @#{username}        
                     a.mobile.only(href="/user/#{username}")
-                        img.ui.circular.tiny.inline.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
+                        img.ui.tiny.inline.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
                     .ui.inline.header.mobile.only
                         strong #{name}
                         // strong #{first_name} #{last_name}
@@ -28,14 +28,14 @@ template(name='user_layout')
                         +i name='coins'
                         |#{user.points}p
                     if is_current_user
-                        a.ui.circular.button(href="/user/#{username}/edit" title='profile settings')
+                        a.ui.button(href="/user/#{username}/edit" title='profile settings')
                             i.cog.icon
                             |edit profile
                         // a.ui.button.logout_other_clients(href="#" title='logout other clients')
                         //     i.globe.icon
                         //     |log out other clients
                     else if is_admin
-                        a.ui.circular.button(href="/user/#{username}/edit" title='profile settings')
+                        a.ui.button(href="/user/#{username}/edit" title='profile settings')
                             +i name='settings' cl='ui avatar image'
                             |edit profile
                     // unless is_current_user
@@ -66,20 +66,20 @@ template(name='user_layout')
                     if in_dev
                         .ui.small.inline.header #{_id}
                         if i_have_points
-                            .ui.basic.circular.button.send(title='send points')
+                            .ui.basic.button.send(title='send points')
                                 i.red.gift.large.icon
                                 span send pts
-                            // .ui.basic.circular.button.request(title='request points')
+                            // .ui.basic.button.request(title='request points')
                             //     i.concierge.bell.large.teal.icon
                             //     span request
                         else
-                            .ui.disabled.basic.circular.button(title='send points')
+                            .ui.disabled.basic.button(title='send points')
                                 i.red.gift.large.icon
                                 span send pts
-                            // .ui.disabled.basic.circular.button(title='request points')
+                            // .ui.disabled.basic.button(title='request points')
                             //     i.concierge.bell.teal.icon
                             //     span request
-                        a.ui.large.compact.basic.circular.icon.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
+                        a.ui.large.compact.basic.icon.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
                             i.chat.large.blue.icon
                             // | message
                     if is_dev
@@ -88,55 +88,55 @@ template(name='user_layout')
         
                             
                 .twelve.wide.column.scrolling
-                    a.ui.compact.circular.button(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
+                    a.ui.compact.button(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
                         // i.dashboard.icon
                         +i name='dashboard'
                         span.mobile.hidden dashboard
-                    a.ui.compact.circular.button(href="/user/#{username}/about" class="{{isActiveRoute 'user_about'}}" title="#{user.username} info")
+                    a.ui.compact.button(href="/user/#{username}/about" class="{{isActiveRoute 'user_about'}}" title="#{user.username} info")
                         // i.info.icon
                         +i name='info'
                         span.mobile.hidden about
-                    a.ui.compact.circular.button(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
+                    a.ui.compact.button(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
                         // i.chevron.down.icon
                         +i name='chevron-down'
                         span.mobile.hidden pts received
-                    a.ui.compact.circular.button(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
+                    a.ui.compact.button(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
                         // i.gift.icon
                         +i name='gift'
                         span.mobile.hidden pts sent
-                    a.ui.compact.circular.button(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
+                    a.ui.compact.button(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
                         // i.dollar.icon
                         +i name='money'
                         span.mobile.hidden credit
-                    a.ui.compact.circular.button(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}" title="#{user.username} events")
+                    a.ui.compact.button(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}" title="#{user.username} events")
                         // i.calendar.icon
                         +i name='calendar'
                         span.mobile.hidden events
-                    a.ui.compact.circular.button(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}" title="#{user.username} requests")
+                    a.ui.compact.button(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}" title="#{user.username} requests")
                         // i.concierge.bell.icon
                         +i name='service-bell'
                         span.mobile.hidden requests
-                    a.ui.compact.circular.button(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}" title="#{user.username} offers")
+                    a.ui.compact.button(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}" title="#{user.username} offers")
                         // i.hand.holding.heart.icon
                         +i name='hand-holding-heart'
                         span.mobile.hidden offers
-                    a.ui.compact.circular.button(href="/user/#{username}/food" class="{{isActiveRoute 'user_food'}}" title="#{user.username} food")
+                    a.ui.compact.button(href="/user/#{username}/food" class="{{isActiveRoute 'user_food'}}" title="#{user.username} food")
                         // i.hand.holding.heart.icon
                         +i name='food'
                         span.mobile.hidden food
-                    a.ui.compact.circular.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
+                    a.ui.compact.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
                         // i.chat.icon
                         +i name='chat'
                         span.mobile.hidden chat
-                    a.ui.compact.circular.button(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}" title="#{user.username} badges")
+                    a.ui.compact.button(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}" title="#{user.username} badges")
                         // i.certificate.icon
                         +i name='prize'
                         span.mobile.hidden badges
-                    a.ui.compact.circular.button(href="/user/#{username}/delivery" class="{{isActiveRoute 'user_delivery'}}" title="#{user.username} badges")
+                    a.ui.compact.button(href="/user/#{username}/delivery" class="{{isActiveRoute 'user_delivery'}}" title="#{user.username} badges")
                         // i.certificate.icon
                         +i name='car'
                         span.mobile.hidden delivery
-                    a.ui.compact.circular.button(href="/user/#{username}/genekeys" class="{{isActiveRoute 'user_genekeys'}}" title="#{user.username} genekeys")
+                    a.ui.compact.button(href="/user/#{username}/genekeys" class="{{isActiveRoute 'user_genekeys'}}" title="#{user.username} genekeys")
                         // i.large.dna.icon
                         +i name='dna-helix'
                         span genekeys
@@ -223,7 +223,7 @@ template(name='user_dashboard')
                     small(title='rank') ##{global_credit_count_rank}
                 i.tags.icon(title='credit tags')
                 each credit_tags
-                    .ui.small.basic.circular.label #{title}
+                    .ui.small.basic.label #{title}
                         // small #{count}
                 .medscroll.ui.segments
                     each user_credits
@@ -238,7 +238,7 @@ template(name='user_dashboard')
                     small(title='rank') ##{global_debit_count_rank}
                 i.tags.icon(title='credit tags')
                 each debit_tags
-                    .ui.small.basic.circular.label #{title} 
+                    .ui.small.basic.label #{title} 
                         // small #{count}
                 div
                 .medscroll.ui.segments
@@ -250,8 +250,8 @@ template(name='user_dashboard')
         .row
             .sixteen.wide.column
                 .ui.inline.header() #{points}pts
-                .ui.big.basic.circular.label() {{to_percent one_ratio}}% one ratio
-                .ui.large.basic.circular.label() #{flow_volume} volume
+                .ui.big.basic.label() {{to_percent one_ratio}}% one ratio
+                .ui.large.basic.label() #{flow_volume} volume
                 //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                 //-     i.refresh.icon
         .four.column.row
@@ -264,7 +264,7 @@ template(name='user_dashboard')
                     small(title='rank') ##{global_credit_count_rank}
                 i.tags.icon(title='credit tags')
                 each credit_tags
-                    .ui.small.basic.circular.label #{title}
+                    .ui.small.basic.label #{title}
                         // small #{count}
                 .medscroll.ui.segments
                     each user_credits
@@ -278,7 +278,7 @@ template(name='user_dashboard')
                     small(title='rank') ##{global_debit_count_rank}
                 i.tags.icon(title='credit tags')
                 each debit_tags
-                    .ui.small.basic.circular.label #{title} 
+                    .ui.small.basic.label #{title} 
                         // small #{count}
     
                 div
@@ -502,7 +502,7 @@ template(name='user_tribes')
         +icolor name='campfire'
         |user tribes
     if is_current_user
-        a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/tribes")
+        a.ui.basic.icon.button(href="/user/#{current_user.username}/edit/tribes")
             i.pencil.icon
     .ui.header leader of
     each user_leader_tribes
@@ -535,7 +535,7 @@ template(name='user_sent')
         
     i.tags.icon(title='credit tags')
     each debit_tags
-        .ui.basic.circular.label #{title}
+        .ui.basic.label #{title}
             small #{count}
         
     .ui.stackable.cards.scrolling
@@ -562,7 +562,7 @@ template(name='user_sent')
 //         +icolor name='orders'
 //         |user orders
 //     if is_current_user
-//         a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/orders")
+//         a.ui.basic.icon.button(href="/user/#{current_user.username}/edit/orders")
 //             i.pencil.icon
 //     div
 //     +array_view key='allergens' label='allergens'
@@ -770,7 +770,7 @@ template(name='user_delivery')
         +icolor name='delivery'
         |user delivery
     if is_current_user
-        a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/delivery")
+        a.ui.basic.icon.button(href="/user/#{current_user.username}/edit/delivery")
             i.pencil.icon
             |edit delivery settings
     div
@@ -798,7 +798,7 @@ template(name='user_credits')
         
     i.tags.icon(title='credit tags')
     each credit_tags
-        .ui.basic.circular.label #{title}
+        .ui.basic.label #{title}
             small #{count}
         
     .ui.stackable.cards.scrolling
@@ -856,7 +856,7 @@ template(name='user_food')
         +icolor name='food'
         |user food
     if is_current_user
-        a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/food")
+        a.ui.basic.icon.button(href="/user/#{current_user.username}/edit/food")
             i.pencil.icon
     div
     +array_view key='allergens' label='allergens'

@@ -4,14 +4,6 @@ if Meteor.isClient
         @render 'chef_view'
         ), name:'chef_view'
         
-    Router.route '/chef/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'chef_edit'
-        ), name:'chef_edit'
-    Router.route '/chef/:doc_id', (->
-        @layout 'layout'
-        @render 'chef_view'
-        ), name:'chef_view'
     Router.route '/chef/:doc_id/view', (->
         @layout 'layout'
         @render 'chef_view'
@@ -181,6 +173,11 @@ if Meteor.isClient
             for order in orders
                 res += order.order_price
             res
+                
+        chef_docs: ->
+            Docs.find({
+                model:'chef'
+            })
                 
 
         can_cancel: ->

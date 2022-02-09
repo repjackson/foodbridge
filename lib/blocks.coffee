@@ -161,13 +161,6 @@ if Meteor.isServer
         Docs.find 
             model:'model'
             title: {$regex:"#{model_title_queary}",$options:'i'}
-    Meteor.publish 'product_orders', (product_id)->
-        product = Docs.findOne product_id
-        # console.log 'finding mishi for', product
-        if product.slug 
-            Docs.find 
-                model:'order'
-                _product:product.slug
         # else console.log 'no product slug', product
         
         
@@ -232,13 +225,6 @@ if Meteor.isServer
         Docs.find 
             model:'group'
             title: {$regex:"#{group_title_queary}",$options:'i'}
-    Meteor.publish 'product_orders', (product_id)->
-        product = Docs.findOne product_id
-        # console.log 'finding mishi for', product
-        if product.slug 
-            Docs.find 
-                model:'order'
-                _product:product.slug
         # else console.log 'no product slug', product
         
         
@@ -300,13 +286,6 @@ if Meteor.isServer
         Docs.find 
             model:'role'
             title: {$regex:"#{title_query}",$options:'i'}
-    Meteor.publish 'product_orders', (product_id)->
-        product = Docs.findOne product_id
-        # console.log 'finding mishi for', product
-        if product.slug 
-            Docs.find 
-                model:'order'
-                _product:product.slug
         # else console.log 'no product slug', product
         
         
@@ -370,13 +349,6 @@ if Meteor.isServer
         Docs.find 
             model:'badge'
             title: {$regex:"#{title_query}",$options:'i'}
-    Meteor.publish 'product_orders', (product_id)->
-        product = Docs.findOne product_id
-        # console.log 'finding mishi for', product
-        if product.slug 
-            Docs.find 
-                model:'order'
-                _product:product.slug
         # else console.log 'no product slug', product
         
         
@@ -437,13 +409,6 @@ if Meteor.isServer
         Docs.find 
             model:'task'
             title: {$regex:"#{title_query}",$options:'i'}
-    Meteor.publish 'product_orders', (product_id)->
-        product = Docs.findOne product_id
-        # console.log 'finding mishi for', product
-        if product.slug 
-            Docs.find 
-                model:'order'
-                _product:product.slug
         # else console.log 'no product slug', product
         
         
