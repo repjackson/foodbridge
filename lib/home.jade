@@ -73,7 +73,7 @@ template(name='open_requests')
                     .ui.header #{when}
                             
 template(name='home_card')
-    a.ui.fluid.card.zoom(href="/#{model}/#{_id}")
+    a.ui.fluid.card.zoom.fly_right(href="/#{model}/#{_id}")
         if youtube_id 
             +youtube_view key='youtube_id' direct=true
         .content 
