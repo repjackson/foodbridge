@@ -258,7 +258,7 @@ Template.registerHelper 'sortable_fields', () ->
 # Template.registerHelper 'current_user', (input) ->
 #     Meteor.user() and Meteor.user().username is Router.current().params.username
 
-
+Template.registerHelper 'current_route', ()-> window.location.pathname
 
 Template.registerHelper 'nl2br', (text)->
     nl2br = (text + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br>' + '$2')

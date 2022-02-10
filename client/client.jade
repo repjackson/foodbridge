@@ -139,3 +139,5 @@ template(name='footer')
                 .ui.list
                     each doc_docs
                         a.item(href="/#{model}/#{_id}") #{title} #{model}
+                +page key=current_route
+                

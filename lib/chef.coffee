@@ -10,50 +10,14 @@ if Meteor.isClient
         ), name:'chef_view_long'
 
         
-    # Router.route '/chef/:doc_id/orders', (->
-    #     @layout 'chef_layout'
-    #     @render 'chef_orders'
-    #     ), name:'chef_orders'
-    # Router.route '/chef/:doc_id/subscriptions', (->
-    #     @layout 'chef_layout'
-    #     @render 'chef_subscriptions'
-    #     ), name:'chef_subscriptions'
-    # Router.route '/chef/:doc_id/comments', (->
-    #     @layout 'chef_layout'
-    #     @render 'chef_comments'
-    #     ), name:'chef_comments'
-    # Router.route '/chef/:doc_id/reviews', (->
-    #     @layout 'chef_layout'
-    #     @render 'chef_reviews'
-    #     ), name:'chef_reviews'
-    # Router.route '/chef/:doc_id/inventory', (->
-    #     @layout 'chef_layout'
-    #     @render 'chef_inventory'
-    #     ), name:'chef_inventory'
-
 
     Template.chef_view.onCreated ->
         @autorun => Meteor.subscribe 'chef_source', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'ingredients_from_chef_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'orders_from_chef_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'subs_from_chef_id', Router.current().params.doc_id, ->
     Template.chef_view.onRendered ->
         Meteor.call 'log_view', Router.current().params.doc_id
         # @autorun => Meteor.subscribe 'ingredients_from_chef_id', Router.current().params.doc_id
     Template.chef_view.events
-        'click .generate_qrcode': (e,t)->
-            qrcode = new QRCode(document.getElementById("qrcode"), {
-                text: @title,
-                width: 250,
-                height: 250,
-                colorDark : "#000000",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
-            })
-
-        'click .calc_stats': (e,t)->
-            Meteor.call 'calc_chef_data', Router.current().params.doc_id, ->
         'click .goto_source': (e,t)->
             $(e.currentTarget).closest('.pushable').transition('fade right', 240)
             chef = Docs.findOne Router.current().params.doc_id
@@ -86,81 +50,7 @@ if Meteor.isClient
             #     Router.go "/source/#{chef.source_id}"
             # , 240
         
-        'click .add_to_cart': ->
-            Meteor.call 'add_to_cart', @_id, =>
-                $('body').toast(
-                    showIcon: 'cart plus'
-                    message: "#{@title} added"
-                    # showProgress: 'bottom'
-                    class: 'success'
-                    # displayTime: 'auto',
-                    position: "bottom right"
-                )
 
-
-    Template.chef_subscriptions.events
-        'click .subscribe': ->
-            if confirm 'subscribe?'
-                Docs.update Router.current().params.doc_id,
-                    $addToSet: 
-                        subscribed_ids: Meteor.userId()
-                new_sub_id = 
-                    Docs.insert 
-                        model:'chef_subscription'
-                        chef_id:Router.current().params.doc_id
-                Router.go "/subscription/#{new_sub_id}/edit"
-                    
-        'click .unsubscribe': ->
-            if confirm 'unsubscribe?'
-                Docs.update Router.current().params.doc_id,
-                    $pull: 
-                        subscribed_ids: Meteor.userId()
-                                    
-    
-        'click .mark_ready': ->
-            if confirm 'mark chef ready?'
-                Docs.update Router.current().params.doc_id,
-                    $set:
-                        ready:true
-                        ready_timestamp:Date.now()
-
-        'click .unmark_ready': ->
-            if confirm 'unmark chef ready?'
-                Docs.update Router.current().params.doc_id,
-                    $set:
-                        ready:false
-                        ready_timestamp:null
-
-    Template.chef_inventory.onCreated ->
-        @autorun => Meteor.subscribe 'inventory_from_chef_id', Router.current().params.doc_id
-            
-    Template.chef_inventory.events
-        'click .add_inventory': ->
-            count = Docs.find(model:'inventory_item').count()
-            new_id = Docs.insert 
-                model:'inventory_item'
-                chef_id:@_id
-                id:count++
-            Session.set('editing_inventory_id', @_id)
-        'click .edit_inventory_item': -> 
-            Session.set('editing_inventory_id', @_id)
-        'click .save_inventory_item': -> 
-            Session.set('editing_inventory_id', null)
-        
-    Template.chef_inventory.helpers
-        editing_this: -> Session.equals('editing_inventory_id', @_id)
-        inventory_items: ->
-            Docs.find({
-                model:'inventory_item'
-                chef_id:@_id
-            }, sort:'_timestamp':-1)
-
-
-    Template.chef_subscriptions.helpers
-        chef_subs: ->
-            Docs.find
-                model:'chef_subscription'
-                chef_id:Router.current().params.doc_id
 
     Template.chef_view.helpers
         chef_order_total: ->
@@ -194,89 +84,9 @@ if Meteor.isClient
                     true
 
 
-        can_order: ->
-            if Meteor.user().roles and 'admin' in Meteor.user().roles
-                true
-            else
-                @cook_user_id isnt Meteor.userId()
-
-        chef_order_class: ->
-            if @status is 'ready'
-                'green'
-            else if @status is 'pending'
-                'yellow'
-                
-                
-    Template.order_button.onCreated ->
-
-    Template.order_button.helpers
-
-    Template.order_button.events
-        # 'click .join_waitlist': ->
-        #     Swal.fire({
-        #         title: 'confirm wait list join',
-        #         text: 'this will charge your account if orders cancel'
-        #         icon: 'question'
-        #         showCancelButton: true,
-        #         confirmButtonText: 'confirm'
-        #         cancelButtonText: 'cancel'
-        #     }).then((result) =>
-        #         if result.value
-        #             Docs.insert
-        #                 model:'order'
-        #                 waitlist:true
-        #                 chef_id: Router.current().params.doc_id
-        #             Swal.fire(
-        #                 'wait list joined',
-        #                 "you'll be alerted if accepted"
-        #                 'success'
-        #             )
-        #     )
-
-        'click .order_chef': ->
-            # if Meteor.user().credit >= @price_per_serving
-            # Docs.insert
-            #     model:'order'
-            #     status:'pending'
-            #     complete:false
-            #     chef_id: Router.current().params.doc_id
-            #     if @serving_unit
-            #         serving_text = @serving_unit
-            #     else
-            #         serving_text = 'serving'
-            # Swal.fire({
-            #     # title: "confirm buy #{serving_text}"
-            #     title: "confirm order?"
-            #     text: "this will charge you #{@price_usd}"
-            #     icon: 'question'
-            #     showCancelButton: true,
-            #     confirmButtonText: 'confirm'
-            #     cancelButtonText: 'cancel'
-            # }).then((result) =>
-            #     if result.value
-            Meteor.call 'order_chef', @_id, (err, res)->
-                if err
-                    Swal.fire(
-                        'err'
-                        'error'
-                    )
-                    console.log err
-                else
-                    Router.go "/order/#{res}/edit"
-                    # Swal.fire(
-                    #     'order and payment processed'
-                    #     ''
-                    #     'success'
-                    # )
-        # )
 
 if Meteor.isServer
-    Meteor.publish 'ingredients_from_chef_id', (chef_id)->
-        chef = Docs.findOne chef_id
-        Docs.find 
-            model:'ingredient'  
-            _id:$in:chef.ingredient_ids
-    Meteor.publish 'chef_source', (chef_id)->
+    Meteor.publish 'chef_sources', (chef_id)->
         chef = Docs.findOne chef_id
         # console.log 'need source from this chef', chef
         Docs.find

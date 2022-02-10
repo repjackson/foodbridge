@@ -22,8 +22,8 @@ template(name='page')
             |#{title}
         |!{content}
         if currentUser.admin_mode
-            +text_edit key='title'
-            +html_edit key='content'
+            +text_edit key='title' direct=true
+            +html_edit key='content' direct=true
     else 
         if currentUser.admin_mode
             .ui.red.button.create_doc 
