@@ -83,7 +83,7 @@ template(name='layout')
     //     +right_sidebar
     // #ain_area.global_conainer.pusher
     +yield
-    // +footer
+    +footer
 
 
 template(name='mlayout')
@@ -123,13 +123,19 @@ template(name='shortcut_modal')
 
 
 template(name='footer')
-    .ui.segment 
-        .ui.header footer 
-        .ui.list
-            each user_docs 
-                .item #{username}
-        .ui.header 
-            |docs 
-        .ui.list
-            each doc_docs
-                .item #{title} #{model}
+    if currentUser.admin_mode
+        .ui.stackable.padded.divided.grid
+            .eight.wide.column
+                .ui.header 
+                    i.users.icon
+                    |accessible users
+                .ui.list
+                    each user_docs 
+                        a.item(href="/user/#{username}") #{username}
+            .eight.wide.column
+                .ui.header 
+                    i.document.icon
+                    |accessible docs
+                .ui.list
+                    each doc_docs
+                        a.item(href="/#{model}/#{_id}") #{title} #{model}

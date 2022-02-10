@@ -34,7 +34,7 @@ template(name='user_layout')
                         // a.ui.button.logout_other_clients(href="#" title='logout other clients')
                         //     i.globe.icon
                         //     |log out other clients
-                    else if is_admin
+                    else if currentUser.admin_mod
                         a.ui.button(href="/user/#{username}/edit" title='profile settings')
                             +i name='settings' cl='ui avatar image'
                             |edit profile
@@ -684,24 +684,10 @@ template(name='user_about')
         //     +icon name='dna-helix' cl='ui mini image'
             
         //     |view gene keys profile
-        .ui.four.column.stackable.grid
+        .ui.one.column.stackable.grid
             .column
-                .ui.small.header What do you hope to receive?
-                .smallscroll
-                    |#{profile_hope_receive}
-            .column
-                .ui.small.header What excites you about being apart of this community?
-                .smallscroll
-                    |#{profile_excites_blurb}
-                .spacer
-            .column
-                .ui.small.header What do you want this community to know about you?
-                .smallscroll
-                    |#{profile_community_blurb}
-            .column
-                .ui.small.header What would you like to contribute (think: superpowers, talents, gifts, resources)?
-                .smallscroll
-                    |#{profile_contribute_blurb}
+                .ui.small.header bio
+                |#{bio}
         if tags 
             i.large.tags.icon
             each tags

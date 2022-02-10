@@ -12,6 +12,15 @@ if Meteor.isClient
         'click .toggle_admin_mode': ->
             Meteor.users.update Meteor.userId(),
                 $set:admin_mode:!Meteor.user().admin_mode
+            $('body').toast(
+                showIcon: 'checkmark'
+                message: "admin mode: #{Meteor.user().admin_mode}"
+                # showProgress: 'bottom'
+                class: 'info'
+                # displayTime: 'auto',
+                position: "bottom right"
+            )
+
         'click .reset': ->
             # model_slug =  Router.current().params.model_slug
             Session.set 'loading', true

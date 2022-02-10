@@ -1,3 +1,17 @@
+template(name='chat_widget')
+    .ui.header 
+        +i name='chat'
+        |chat
+    .ui.smoothed.segment.description.chat_messages.scrolling
+        .ui.comments
+            each chat_messages
+                +chat_message
+    if in_chat
+        .ui.icon.fluid.attached.input
+            i.chevron.right.icon
+            input.add_message(type='text' placeholder='add message...')
+
+
 template(name='view_chats')
     //- img.ui.fluid.image.bg_overlay(src="{{c.url 'nightbg' width=1000 crop='fit'}}")    
     .ui.stackable.padded.grid
