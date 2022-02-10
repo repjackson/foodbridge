@@ -18,6 +18,14 @@ if Meteor.isClient
         Meteor.call 'log_view', Router.current().params.doc_id
         # @autorun => Meteor.subscribe 'ingredients_from_chef_id', Router.current().params.doc_id
     Template.chef_view.events
+        'click .start_catering_order': ->
+            new_id = 
+                Docs.insert 
+                    model:'catering_order'
+                    chef_id:Router.current().params.doc_id
+            Router.go "/catering_order/#{new_id}/edit"
+            
+
         'click .goto_source': (e,t)->
             $(e.currentTarget).closest('.pushable').transition('fade right', 240)
             chef = Docs.findOne Router.current().params.doc_id
@@ -292,7 +300,19 @@ if Meteor.isClient
         @layout 'layout'
         @render 'chefs'
         ), name:'chefs'
+    Template.chefs.onCreated ->
+        @autorun => @subscribe 'chef_results',
+            picked_tags.array()
+            Session.get('chef_title_filter')
 
+        @autorun => @subscribe 'chef_facets',
+            picked_tags.array()
+            Session.get('chef_title_filter')
+
+    Template.chefs.helpers
+        chef_docs: ->
+            Docs.find 
+                model:'chef'
 
     Template.chef_card.events
         'click .add_to_cart': (e,t)->
@@ -331,7 +351,7 @@ if Meteor.isServer
         )->
         # console.log picked_ingredients
         self = @
-        match = {model:'chef', app:'nf'}
+        match = {model:'chef'}
         if chefs_section 
             match.chefs_section = chefs_section
         if picked_ingredients.length > 0
@@ -390,7 +410,7 @@ if Meteor.isServer
     
         # console.log picked_ingredients
         self = @
-        match = {model:'chef', app:'nf'}
+        match = {model:'chef'}
         if picked_ingredients.length > 0
             match.ingredients = $all: picked_ingredients
             # sort = 'price_per_serving'

@@ -15,11 +15,11 @@ template(name='chefs')
                     |#{title} 
                     // small.ui.grey.text #{count}
                     
-        .twelve.wide.column
-            .f12
+            p
                 |This is where there should be a GRID with a photo/name of business that people can click on and be brought to a page where there is a profile page for each chef – includes their photo and bio side by side – A small color block with text of what they offer and specialize in – and then a PDF/Photo sized to page of their menu – this will be designed separately and have photos on it… 
                 div
                 |Each of their profiles needs to have a button that says START CATERING ORDER – and will bring them to a page where they do the CATERING INTAKE FORM – that they can also get to through the CATERING page – They can not complete an order for catering on the website – this will be something I do after looking at their intake and which chef they want to work with – then I will send them a custom quote through Quickbooks where they can also pay… 
+        .twelve.wide.column
             .ui.centered.stackable.cards
                 each chef_docs 
                     +chef_card
@@ -51,15 +51,14 @@ template(name='chef_view')
                     // a(href="{{c.url image_id}}" target="_window")
                     // .four.wide.column
                     img.ui.rounded.fluid.image.zoomer(src="{{c.url image_id}}")
-                    if image_id2
-                        img.ui.rounded.image.zoomer(src="{{c.url image_id2}}")
                 .column
                     +html_view key='description' direct=true
-                    // +text_view key='size_description' label='size description'  direct=true
-                    a.ui.circular.button(href=chef_link)
-                        // i.wordpress.large.icon
-                        i.external.icon
-                        |#{chef_link}
+                    if link
+                        a.ui.circular.button(href=link)
+                            // i.wordpress.large.icon
+                            i.external.large.icon
+                            |website:
+                            |#{link}
                     
                     // +boolean_view key='jar' label='jar container (requires deposit & return)' direct=true icon='mason-jar'
                     // .ui.header #{menu_section}
@@ -70,22 +69,24 @@ template(name='chef_view')
                     
                     // +chef_orders
                     +bookmark_button
-                .column
+                    .ui.big.green.button.start_catering_order
+                        |start catering order
                     +chef_reviews
         
         
             
 
 template(name='chef_reviews')
-    .ui.inline.header 
-        +i name='popular-topic'
-        |reviews
-    .ui.circular.basic.icon.button.add_review
-        i.plus.icon
-    div
-    each chef_review_docs
-        a.ui.header(href="/recipe/#{_id}/view") #{title}
-        
+    .ui.basic.segment
+        .ui.inline.header 
+            +i name='popular-topic'
+            |reviews
+        .ui.circular.basic.icon.button.add_review
+            i.plus.icon
+        div
+        each chef_review_docs
+            a.ui.header(href="/recipe/#{_id}/view") #{title}
+            
 
 
 template(name='chef_edit')
@@ -107,8 +108,6 @@ template(name='chef_edit')
                     // +image_edit key='image_id2' label='alt image' direct=true
                     +link_edit key='link' label='link' direct=true
                     // div
-                    +float_edit key='price_usd' label='$ price' direct=true
-                    +number_edit key='price_points' label='point price' icon='coins' direct=true
                 .column
                     div
                     +html_edit key='description' label='description' direct=true
@@ -127,62 +126,15 @@ template(name='chef_edit')
                             i.remove.link.circular.red.icon.remove_source
                             // if is_admin
                             
-                    unless source_id
-                        // if is_admin
-                        .ui.icon.input 
-                            i.building.icon
-                            input.source_search(type='text' placeholder='search source title')
-                        .ui.selection.link.animated.list
-                            each search_results
-                                .ui.item.pick_source.zoomer
-                                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                                    |#{title}
-                            
                                 
                                 
                                 
                                 
                             
 template(name='chef_card')
-    .ui.card.zoomer(class=chef_card_class title=ingredients)
-        if rescued 
-            .ui.top.right.attached.blue.label(title='rescued')
-                i.search.icon
-        if local 
-            .ui.top.right.attached.corner.green.label(title='local')
-                i.marker.icon
-        a.zoomer.fly_right(href="/chef/#{_id}") 
+    a.ui.card.zoomer(href="/chef/#{_id}")
+        .zoomer.fly_right 
             img.ui.centered.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
         .content
-            a.ui.header.fly_right(href="/chef/#{_id}") 
-                //- |#{_author.name}'s
+            .ui.header
                 | #{title}
-            //- if session_is 'view_ingredients' true
-            // +ismall name='ingredients'
-            // each ingredients
-            //     .ui.small.label #{this}
-            if gluten_free
-                +i name='no-gluten' cl='ui mini inline image' title='gluten free'
-            if vegan
-                +i name='vegan-food' cl='ui mini inline image' title='vegan'
-            //- .ui.inline.small.header tags
-            // .content
-            //     .right.floated.meta
-            //         | {{from_now datetime_available}}
-            //     //- if session_is 'view_users' true
-            // //- a.image(href="/chef/#{_id}")
-                
-        .content    
-            .ui.inline.header 
-                |${{fixed price_usd}}
-            i.big.link.cart.plus.green.icon.add_to_cart
-            if is_admin
-                a(href="/chef/#{_id}/edit")
-                    i.pencil.link.icon
-            .ui.inline.small.header 
-                |(#{menu_section}) 
-            div
-            .ui.inline.inline.small.grey.header #{views}
-                i.eye.icon
-            .ui.inline.inline.small.grey.header #{points} 
-                i.line.chart.icon
