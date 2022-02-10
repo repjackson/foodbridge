@@ -182,6 +182,9 @@ if Meteor.isServer
             model:'subscription'
             _author_id:user._id
     
+    Meteor.publish 'subscription_docs', ()->
+        Docs.find 
+            model:'subscription'
     Meteor.publish 'subscription_count', (
         picked_tags
         picked_sections

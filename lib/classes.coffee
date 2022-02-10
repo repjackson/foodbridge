@@ -1,48 +1,48 @@
 if Meteor.isClient
-    Router.route '/posts', (->
+    Router.route '/classes', (->
         @layout 'layout'
-        @render 'posts'
-        ), name:'posts'
-    Router.route '/post/:doc_id/edit', (->
+        @render 'classes'
+        ), name:'classes'
+    Router.route '/class/:doc_id/edit', (->
         @layout 'layout'
-        @render 'post_edit'
-        ), name:'post_edit'
-    Router.route '/post/:doc_id', (->
+        @render 'class_edit'
+        ), name:'class_edit'
+    Router.route '/class/:doc_id', (->
         @layout 'layout'
-        @render 'post_view'
-        ), name:'post_view'
-    Router.route '/post/:doc_id/view', (->
+        @render 'class_view'
+        ), name:'class_view'
+    Router.route '/class/:doc_id/view', (->
         @layout 'layout'
-        @render 'post_view'
-        ), name:'post_view_long'
+        @render 'class_view'
+        ), name:'class_view_long'
     
     
-    Template.posts.onCreated ->
-        @autorun => @subscribe 'post_docs',
+    Template.classes.onCreated ->
+        @autorun => @subscribe 'class_docs',
             picked_tags.array()
-            Session.get('post_title_filter')
+            Session.get('class_title_filter')
 
-        @autorun => @subscribe 'post_facets',
+        @autorun => @subscribe 'class_facets',
             picked_tags.array()
-            Session.get('post_title_filter')
+            Session.get('class_title_filter')
 
     
     
-    Template.posts.events
-        'click .add_post': ->
+    Template.classes.events
+        'click .add_class': ->
             new_id = 
                 Docs.insert 
-                    model:'post'
-            Router.go "/post/#{new_id}/edit"
+                    model:'class'
+            Router.go "/class/#{new_id}/edit"
             
             
             
-    Template.posts.helpers
+    Template.classes.helpers
         picked_tags: -> picked_tags.array()
     
-        post_docs: ->
+        class_docs: ->
             Docs.find {
-                model:'post'
+                model:'class'
                 private:$ne:true
             }, sort:_timestamp:-1    
         tag_results: ->
@@ -50,35 +50,35 @@ if Meteor.isClient
                 model:'tag'
             }, sort:_timestamp:-1
 
-    Template.user_posts.onCreated ->
-        @autorun => Meteor.subscribe 'user_posts', Router.current().params.username, ->
-    Template.user_posts.helpers
-        post_docs: ->
+    Template.user_classes.onCreated ->
+        @autorun => Meteor.subscribe 'user_classes', Router.current().params.username, ->
+    Template.user_classes.helpers
+        class_docs: ->
             Docs.find {
-                model:'post'
+                model:'class'
             }, sort:_timestamp:-1    
     
-    Template.post_view.onCreated ->
+    Template.class_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-    Template.post_edit.onCreated ->
+    Template.class_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-    Template.post_card.onCreated ->
+    Template.class_card.onCreated ->
         @autorun => Meteor.subscribe 'doc_comments', @data._id, ->
 
 
-    Template.post_card.events
-        'click .view_post': ->
-            Router.go "/post/#{@_id}"
-    Template.post_item.events
-        'click .view_post': ->
-            Router.go "/post/#{@_id}"
+    Template.class_card.events
+        'click .view_class': ->
+            Router.go "/class/#{@_id}"
+    Template.class_item.events
+        'click .view_class': ->
+            Router.go "/class/#{@_id}"
 
-    Template.post_view.events
-        'click .add_post_recipe': ->
+    Template.class_view.events
+        'click .add_class_recipe': ->
             new_id = 
                 Docs.insert 
                     model:'recipe'
-                    post_ids:[@_id]
+                    class_ids:[@_id]
             Router.go "/recipe/#{new_id}/edit"
 
     # Template.favorite_icon_toggle.helpers
@@ -106,10 +106,10 @@ if Meteor.isClient
     #                 $addToSet:favorite_ids:Meteor.userId()
     
     
-    Template.post_edit.events
-        'click .delete_post': ->
+    Template.class_edit.events
+        'click .delete_class': ->
             Swal.fire({
-                title: "delete post?"
+                title: "delete class?"
                 text: "cannot be undone"
                 icon: 'question'
                 confirmButtonText: 'delete'
@@ -123,16 +123,16 @@ if Meteor.isClient
                     Swal.fire(
                         position: 'top-end',
                         icon: 'success',
-                        title: 'post removed',
+                        title: 'class removed',
                         showConfirmButton: false,
                         timer: 1500
                     )
-                    Router.go "/posts"
+                    Router.go "/classes"
             )
 
         'click .publish': ->
             Swal.fire({
-                title: "publish post?"
+                title: "publish class?"
                 text: "point bounty will be held from your account"
                 icon: 'question'
                 confirmButtonText: 'publish'
@@ -142,11 +142,11 @@ if Meteor.isClient
                 reverseButtons: true
             }).then((result)=>
                 if result.value
-                    Meteor.call 'publish_post', @_id, =>
+                    Meteor.call 'publish_class', @_id, =>
                         Swal.fire(
                             position: 'bottom-end',
                             icon: 'success',
-                            title: 'post published',
+                            title: 'class published',
                             showConfirmButton: false,
                             timer: 1000
                         )
@@ -154,7 +154,7 @@ if Meteor.isClient
 
         'click .unpublish': ->
             Swal.fire({
-                title: "unpublish post?"
+                title: "unpublish class?"
                 text: "point bounty will be returned to your account"
                 icon: 'question'
                 confirmButtonText: 'unpublish'
@@ -164,28 +164,28 @@ if Meteor.isClient
                 reverseButtons: true
             }).then((result)=>
                 if result.value
-                    Meteor.call 'unpublish_post', @_id, =>
+                    Meteor.call 'unpublish_class', @_id, =>
                         Swal.fire(
                             position: 'bottom-end',
                             icon: 'success',
-                            title: 'post unpublished',
+                            title: 'class unpublished',
                             showConfirmButton: false,
                             timer: 1000
                         )
             )
             
 if Meteor.isServer
-    Meteor.publish 'user_posts', (username)->
+    Meteor.publish 'user_classes', (username)->
         user = Meteor.users.findOne username:username
         
         Docs.find 
-            model:'post'
+            model:'class'
             _author_id:user._id
     
-    Meteor.publish 'post_count', (
+    Meteor.publish 'class_count', (
         picked_tags
         picked_sections
-        post_query
+        class_query
         view_vegan
         view_gf
         )->
@@ -193,7 +193,7 @@ if Meteor.isServer
     
         # console.log picked_tags
         self = @
-        match = {model:'post'}
+        match = {model:'class'}
         if picked_tags.length > 0
             match.ingredients = $all: picked_tags
             # sort = 'price_per_serving'
@@ -208,17 +208,17 @@ if Meteor.isServer
             match.vegan = true
         if view_gf
             match.gluten_free = true
-        if post_query and post_query.length > 1
-            console.log 'searching post_query', post_query
-            match.title = {$regex:"#{post_query}", $options: 'i'}
-        Counts.publish this, 'post_counter', Docs.find(match)
+        if class_query and class_query.length > 1
+            console.log 'searching class_query', class_query
+            match.title = {$regex:"#{class_query}", $options: 'i'}
+        Counts.publish this, 'class_counter', Docs.find(match)
         return undefined
 
 
 if Meteor.isClient
-    Template.post_card.onCreated ->
+    Template.class_card.onCreated ->
         # @autorun => Meteor.subscribe 'model_docs', 'food'
-    Template.post_card.events
+    Template.class_card.events
         'click .quickbuy': ->
             console.log @
             Session.set('quickbuying_id', @_id)
@@ -242,8 +242,8 @@ if Meteor.isClient
         # 'click .view_card': ->
         #     $('.container_')
 
-    Template.post_card.helpers
-        post_card_class: ->
+    Template.class_card.helpers
+        class_card_class: ->
             # if Session.get('quickbuying_id')
             #     if Session.equals('quickbuying_id', @_id)
             #         'raised'
@@ -261,7 +261,7 @@ if Meteor.isClient
             
             
 if Meteor.isServer
-    Meteor.publish 'post_facets', (
+    Meteor.publish 'class_facets', (
         picked_tags=[]
         title_filter
         picked_authors=[]
@@ -276,7 +276,7 @@ if Meteor.isServer
         self = @
         match = {}
         # match = {app:'pes'}
-        match.model = 'post'
+        match.model = 'class'
         # match.group_id = Meteor.user().current_group_id
         
         if title_filter and title_filter.length > 1
@@ -391,7 +391,7 @@ if Meteor.isServer
     
         self.ready()
         
-    Meteor.publish 'post_docs', (
+    Meteor.publish 'class_docs', (
         picked_tags
         # title_filter
         # picked_authors=[]
@@ -409,7 +409,7 @@ if Meteor.isServer
         self = @
         match = {}
         # match = {app:'pes'}
-        match.model = 'post'
+        match.model = 'class'
         # match.group_id = Meteor.user().current_group_id
         # if title_filter and title_filter.length > 1
         #     match.title = {$regex:title_filter, $options:'i'}
@@ -428,4 +428,4 @@ if Meteor.isServer
         Docs.find match, 
             limit:20
             sort:
-                _timestamp:-1
+                _timestamp:-1    
