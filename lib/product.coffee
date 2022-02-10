@@ -391,12 +391,6 @@ if Meteor.isClient
                 Docs.remove Router.current().params.doc_id
                 Router.go "/"
 
-if Meteor.isServer 
-    Meteor.publish 'source_search_results', (source_title_queary)->
-        Docs.find 
-            model:'source'
-            title: {$regex:"#{source_title_queary}",$options:'i'}
-
 
 if Meteor.isClient
     Template.ingredient_picker.onCreated ->
@@ -451,10 +445,6 @@ if Meteor.isClient
 
 
 if Meteor.isServer 
-    Meteor.publish 'ingredient_search_results', (ingredient_title_query)->
-        Docs.find 
-            model:'ingredient'
-            title: {$regex:"#{ingredient_title_query}",$options:'i'}
     Meteor.publish 'product_orders', (product_id)->
         product = Docs.findOne product_id
         # console.log 'finding mishi for', product

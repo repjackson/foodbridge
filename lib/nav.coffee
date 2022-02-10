@@ -1,7 +1,7 @@
 if Meteor.isClient
     Template.nav.onCreated ->
         @autorun => Meteor.subscribe 'me', ->
-        # @autorun => Meteor.subscribe 'all_users'
+        @autorun => Meteor.subscribe 'all_users'
         
         @autorun => Meteor.subscribe 'my_cart', ->
         # @autorun => Meteor.subscribe 'my_cart_order'
@@ -9,6 +9,9 @@ if Meteor.isClient
 
     Template.nav.onRendered ->
     Template.nav.events
+        'click .toggle_admin_mode': ->
+            Meteor.users.update Meteor.userId(),
+                $set:admin_mode:!Meteor.user().admin_mode
         'click .reset': ->
             # model_slug =  Router.current().params.model_slug
             Session.set 'loading', true

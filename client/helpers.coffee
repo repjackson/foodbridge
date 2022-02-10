@@ -16,6 +16,10 @@ Template.registerHelper 'model_docs_helper', (model) ->
     console.log model
     Docs.find 
         model:model
+        
+Template.registerHelper '_customer', ->
+    Meteor.users.findOne 
+        _id: @customer_id
 Template.registerHelper 'subs_ready', () -> 
     Template.instance().subscriptionsReady()
 

@@ -43,8 +43,12 @@ template(name='nav')
         //         input.search_site(type='text' autocomplete="off" value=current_product_search)
         .right.menu
             if currentUser.admin
-                a.icon.item(href="/admin" class="{{isActiveRoute 'admin'}}")
-                    i.large.shield.icon
+                a.icon.item.toggle_admin_mode(class=admin_class)
+                    if currentUser.admin_mode
+                        i.large.blue.shield.icon
+                    else 
+                        i.large.shield.icon
+                    
             if unread_count
                 a.item.alerts.select_term(href="#" class=alert_toggle_class)
                     i.large.bell.icon
@@ -115,6 +119,10 @@ template(name='nav')
         a.icon.item.zoomer(href="/classes" class="{{isActiveRoute 'classes'}}")
             // i.large.inbox.icon
             +i name='university'
+            // span.mobile.hidden recipes
+        a.icon.item.zoomer(href="/subscriptions" class="{{isActiveRoute 'subscriptions'}}")
+            // i.large.inbox.icon
+            +i name='clock'
             // span.mobile.hidden recipes
 
 
