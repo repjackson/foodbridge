@@ -1,3 +1,8 @@
+template(name='catering')
+    .ui.stackable.padded.grid
+        .sixteen.wide.column
+            .ui.header catering
+            +catering_orders
 template(name='catering_orders')
     .ui.stackable.padded.grid
         .sixteen.wide.column
@@ -79,27 +84,6 @@ template(name='catering_order_history')
         each catering_order_events
             .item #{text} #{when}
             
-template(name='catering_order_subscription')
-    //- +ismall name='renew-subscription'
-    //- .ui.inline.header
-    //-     |subscription settings
-    .ui.button.subscribe subscribe to updates
-    .ui.list
-        each subscribers
-            .item #{text} #{when}
-            
-template(name='catering_order_reservations')
-    .ui.header
-        +ismall name='invoice'
-        |catering_order reservations
-    .ui.button.new_reservation
-        |new reservation
-    each reservations
-        .ui.segment
-            .ui.header #{when}
-            .ui.header by #{_author_username}
-            +view_button
-            +edit_button
 
 
 template(name='catering_order_edit')
@@ -113,18 +97,10 @@ template(name='catering_order_edit')
                         i.checkmark.large.icon
                     +remove_button
                     +image_edit key='image_id' label='image' direct=true
-                    +link_edit key='link' label='link' direct=true
                 .six.wide.column.scrolling
-                    +text_edit key='title' direct=true
                     +html_edit key='description' label='content' icon='content' direct=true
                 .five.wide.column.scrolling
-                    +single_user_edit key='leader' label='leader' icon='crown' direct=true
                     +array_edit key='tags' label='tags' icon='tags' direct=true
-                    +array_edit key='location_tags' label='location tags' icon='marker' direct=true
-                    +text_edit key='contact_info' label='contact info' icon='info' direct=true
-                    +multi_user_edit key='member_ids' label='members' direct=true
-                    +boolean_edit key='private' label='private' direct=true
-                    +multi_user_edit key='leader_ids' label='tribe leaders' direct=true
 
                     
 template(name='catering_order_view')
@@ -160,30 +136,11 @@ template(name='catering_order_view')
                     +viewing
                     if in_dev 
                         +print_this
-                    +multi_user_view key='member_ids' label='members' direct=true
                     +catering_order_history
-                    +catering_order_subscription
-
                 .five.wide.column
                     +html_view key='description' icon='content' label='description'
-                    .ui.inline.header 
-                        +i name='crown' cl='ui avatar image'
-                        |leader: 
-                    with leader 
-                        +user_info
                     // a.ui.basic.button(href="/user/#{leader}")
                     //     |#{leader}
-                    .ui.header 
-                        +i name='catering_orders'
-                        |#{member_ids.count} members
-                    .ui.large.selection.animated.list
-                        each member_ids
-                            +user_info
-                            // a.item(href="/catering_order/#{_id}/#{username}")
-                            //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
-                            //     .content
-                            //         .header
-                            //             |#{username}
                 .five.wide.column
                     if is_member
                         .ui.button.leave(title='click to leave')
@@ -194,20 +151,6 @@ template(name='catering_order_view')
                             i.user.plus.icon
                             |join
                     // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
-                    .ui.header 
-                        +i name='rss'
-                        |activity
-                    each log_items
-                        +log_item
-                    .ui.header 
-                        +i name='line-chart'
-                        |stats
-                    i.refresh.link.icon.refresh_catering_order_stats
-                    .ui.large.list
-                        .item #{member_count} members
-                        .item #{meal_count} meals
-                        .item #{dish_count} dishes
-                        .item #{total_credit_exchanged} credits exchanged
                     +comments
     
 template(name='user_catering_orders')

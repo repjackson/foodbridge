@@ -112,6 +112,10 @@ template(name='nav')
             // i.large.inbox.icon
             +i name='farm'
             span.mobile.hidden partners
+        a.icon.item.zoomer(href="/catering" class="{{isActiveRoute 'catering'}}")
+            // i.large.inbox.icon
+            +i name='new-years-eve'
+            span.mobile.hidden catering
         a.icon.item.zoomer(href="/events" class="{{isActiveRoute 'events'}}")
             // i.large.inbox.icon
             +i name='calendar'
@@ -127,7 +131,7 @@ template(name='nav')
         a.icon.item.zoomer(href="/classes" class="{{isActiveRoute 'classes'}}")
             // i.large.inbox.icon
             +i name='university'
-            span.mobile.hidden recipes
+            span.mobile.hidden classes
         a.icon.item.zoomer(href="/subscriptions" class="{{isActiveRoute 'subscriptions'}}")
             // i.large.inbox.icon
             +i name='clock'
