@@ -1,6 +1,6 @@
 template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
-    #topnav.topnav.ui.attached.borderless.menu.hscroll
+    #topnav.topnav.ui.attached.borderless.inverted.menu.hscroll
         // if is_loading
         //     .icon.item
         //         i.big.loading.grey.refresh.icon.cancel
@@ -99,7 +99,7 @@ template(name='nav')
                     span.mobile.hidden login
             if session_is 'viewing_alerts'
                 +topbar
-    .ui.small.attached.menu 
+    .ui.small.attached.inverted.menu 
         a.icon.item.zoomer(href="/tasks" class="{{isActiveRoute 'tasks'}}")
             // i.large.inbox.icon
             +i name='tasks'

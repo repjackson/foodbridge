@@ -576,14 +576,14 @@ if Meteor.isServer
 #                 _author_id: Router.current().params.user_id
 
 
-if Meteor.isServer
-    Meteor.publish 'user_sent', (username)->
-        user = Meteor.users.findOne username:username
-        Docs.find {
-            model:'debit'
-            _author_id: user._id
-        }, 
-            limit:100            
+# if Meteor.isServer
+#     Meteor.publish 'user_sent', (username)->
+#         user = Meteor.users.findOne username:username
+#         Docs.find {
+#             model:'debit'
+#             _author_id: user._id
+#         }, 
+#             limit:100            
             
             
             
@@ -624,12 +624,12 @@ if Meteor.isServer
 
 
 
-if Meteor.isServer
-    Meteor.publish 'user_orders', (username)->
-        user = Meteor.users.findOne username:username
-        Docs.find
-            model:'order'
-            _author_id:user._id
+# if Meteor.isServer
+#     Meteor.publish 'user_orders', (username)->
+#         user = Meteor.users.findOne username:username
+#         Docs.find
+#             model:'order'
+#             _author_id:user._id
             
             
             
