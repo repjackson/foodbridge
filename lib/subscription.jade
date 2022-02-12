@@ -144,12 +144,10 @@ template(name='subscription_view')
                         .ui.header #{when}
                         //- +array_view key='location_tags' label='location_tags' direct=true
                         +comments
-                .ten.wide.column.scrolling
+                .ten.wide.column
                     img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
-                    if youtube_id 
-                        +youtube_view key='youtube_id' direct=true
                     |!{content}
                     div 
                     .spacer
