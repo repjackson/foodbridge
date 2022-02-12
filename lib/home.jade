@@ -11,7 +11,6 @@ template(name='home')
                     strong #{currentUser.points}p
                     div
                     .ui.inline.header #{currentUser.tagline}
-                
             else 
                 a.ui.button(href='/login')
                     +i name='internal'
@@ -94,6 +93,8 @@ template(name='home_card')
         img.ui.image(src="{{c.url image_id width=400 height=400}}")
         .content 
             .description
+                if _is 'model' 'post'
+                    |!{content}
                     // i.newspaper.large.icon
                 .ui.image.large.label 
                     img.ui.image(src="{{c.url _author.image_id width=400 height=400}}")

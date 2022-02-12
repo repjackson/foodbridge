@@ -1,30 +1,33 @@
-template(name='subscriptions')
+template(name='recipes')
     .ui.stackable.padded.grid 
         .four.wide.column
             .ui.inline.header 
                 +i name='blog'
-                |subscriptions
+                |recipes
                 // if currentUser
-                .ui.icon.button.add_subscription
+                .ui.icon.button.add_recipe
                     i.plus.large.icon
             each picked_tags
-                a.ui.blue.button.unpick_subscription_tag
+                a.ui.blue.button.unpick_recipe_tag
                     |#{this}
             each tag_results
                 // if title
-                a.ui.compact.button.pick_subscription_tag
+                a.ui.compact.button.pick_recipe_tag
                     |#{title} 
                     // small.ui.grey.text #{count}
         .twelve.wide.column
             .ui.centered.stackable.cards
-                each subscription_docs 
-                    +subscription_card
+                each recipe_docs 
+                    +recipe_card
                     
                     
-template(name='subscription_card')
-    a.ui.card.fly_right(href="/subscription/#{_id}")
+template(name='recipe_card')
+    a.ui.card.fly_right(href="/recipe/#{_id}")
+        if youtube_id 
+            +youtube_view key='youtube_id' direct=true
+        if image_id 
+            +image_view key='image_id' direct=true
         .content
-            .ui.header #{frequency} days
             .ui.inline.header #{title}
             if private 
                 i.large.lock.icon
@@ -43,7 +46,7 @@ template(name='subscription_card')
             +author_info
 
 
-template(name='set_subscription_sort_key')
+template(name='set_recipe_sort_key')
     .item.set_sort
         if color
             .ui.label(class=color) #{label}
@@ -56,33 +59,32 @@ template(name='set_subscription_sort_key')
         
         
                 
-template(name='user_subscriptions')
+template(name='user_recipes')
     .ui.inline.header 
         +i name='blog'
-        |user subscriptions
+        |user recipes
     if is_current_user
-        .ui.basic.icon.button.add_subscription
+        .ui.basic.icon.button.add_recipe
             i.large.plus.icon
     .ui.padded.stackable.one.column.grid
         .column
             .ui.stackable.cards.scrolling
-                each subscription_docs 
+                each recipe_docs 
                     .ui.card
                         .content
-                            a(href="/subscription/#{_id}") 
+                            a(href="/recipe/#{_id}") 
                                 img.ui.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
-    
                             .smallscroll 
                                 |!{content}
                             // |created #{when}
                             small {{when}}
-                            a.ui.icon.button(href='/subscription/#{_id}')
+                            a.ui.icon.button(href='/recipe/#{_id}')
                                 i.large.chevron.right.icon
                             
         
         
 
-template(name='set_view_mode_subscription')
+template(name='set_view_mode_recipe')
     .item.set_view
         i.icon(class=icon)
         |#{title}
@@ -94,9 +96,9 @@ template(name='set_view_mode_subscription')
 
 
         
-template(name='subscription_item')
-    .ui.fluid.segment.view_subscription.pointer
-        a.ui.header(href="/subscription/#{_id}") #{title}
+template(name='recipe_item')
+    .ui.fluid.segment.view_recipe.pointer
+        a.ui.header(href="/recipe/#{_id}") #{title}
         div
         .ui.small.grey.inline.header #{when}
         | #{content}
@@ -104,23 +106,22 @@ template(name='subscription_item')
             .ui.basic.small.label #{this}
         
 
-template(name='subscription_view')
+template(name='recipe_view')
     with current_doc
         .ui.stackable.grid
             .row 
-                .six.wide.column
+                .four.wide.column
                     .ui.basic.segment
                         .ui.header #{title}
-                        a.ui.circular.button.fly_left(href="/subscriptions")
+                        a.ui.circular.button.fly_left(href="/recipes")
                             i.chevron.left.big.icon
                             i.newspaper.big.icon
-                            |subscriptions
+                            |recipes
                         // div
                         // .ui.inline.grey.header {{from_now start_datetime}}
-                        .ui.header frequency 
-                        |#{frequency}
+                        
                         if can_edit
-                            a.ui.circular.icon.button.edit_subscription(href="/subscription/#{_id}/edit" title='edit')
+                            a.ui.circular.icon.button.edit_recipe(href="/recipe/#{_id}/edit" title='edit')
                                 i.big.link.pencil.icon
                         .ui.segment
                             .ui.header 
@@ -140,10 +141,12 @@ template(name='subscription_view')
                         .ui.header #{when}
                         //- +array_view key='location_tags' label='location_tags' direct=true
                         +comments
-                .ten.wide.column
+                .twelve.wide.column.scrolling
                     img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
+                    if youtube_id 
+                        +youtube_view key='youtube_id' direct=true
                     |!{content}
                     div 
                     .spacer
@@ -157,35 +160,30 @@ template(name='subscription_view')
                     
                     
                     
-template(name='subscription_edit')
+template(name='recipe_edit')
     with current_doc
         .ui.stackable.padded.grid
             .row 
                 .ten.wide.column
                     .ui.inline.header 
                         +icolor name='news' cl='ui image inline pointer'
-                        |edit subscription
-                    a.ui.icon.green.big.button(href="/subscription/#{_id}" title='save')
+                        |edit recipe
+                    a.ui.icon.green.big.button(href="/recipe/#{_id}" title='save')
                         i.checkmark.big.icon
-                    // +text_edit key='title' label='title' direct=true
-                    +key_value_edit key='frequency' value=7 label='every 7 days'
-                    +key_value_edit key='frequency' value=14 label='every 14 days'
-                    +key_value_edit key='frequency' value=30 label='every 30 days'
-
-                    +html_edit key='notes' label='notes' direct=true
-                    // +youtube_edit key='youtube_id' label='youtube id' direct=true
+                    +text_edit key='title' label='title' direct=true
+                    +html_edit key='content' label='content' direct=true
+                    +youtube_edit key='youtube_id' label='youtube id' direct=true
                 .six.wide.column
-                    i.large.link.red.remove.icon.delete_subscription
+                    i.large.link.red.remove.icon.delete_recipe
                     .ui.header 
-                        small customer
-                        |#{_customer.username}
-                    +single_user_edit key='customer_id' label='customer' direct=true
+                        small author
+                        |#{_author.username}
                     if is_dev
                         +single_user_edit key='_author_id' label='author' direct=true
-                    // +image_edit key='image_id' label='image' direct=true
+                    +image_edit key='image_id' label='image' direct=true
                     div 
                     +array_edit key='tags' label='tags' direct=true icon='tags'
-                    +boolean_edit key='active' icon='checkmark' direct=true
+                    +boolean_edit key='published' icon='visible' direct=true
                     if is_dev 
                         +text_edit key='model' label='model' direct=true
                     +array_edit key='location_tags' label='location_tags' direct=true
@@ -196,9 +194,9 @@ template(name='subscription_edit')
                     // else
                     //     .ui.basic.button.unpublish 
                     //         |unpublish
-                    // .ui.header
-                    //     |audience
-                    // +boolean_edit key='private' label='private' 
-                    // if private 
-                    //     +multi_user_edit key='access_user_ids' label='user picker' direct=true
-                    // +group_picker
+                    .ui.header
+                        |audience
+                    +boolean_edit key='private' label='private' 
+                    if private 
+                        +multi_user_edit key='access_user_ids' label='user picker' direct=true
+                    +group_picker

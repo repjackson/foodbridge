@@ -99,45 +99,36 @@ template(name='nav')
                     span.mobile.hidden login
             if session_is 'viewing_alerts'
                 +topbar
-    .ui.small.attached.inverted.menu 
+    .ui.small.attached.inverted.borderless.menu.hscroll
         a.icon.item.zoomer(href="/tasks" class="{{isActiveRoute 'tasks'}}")
             // i.large.inbox.icon
             +i name='tasks'
             span.mobile.hidden tasks
         a.icon.item.zoomer(href="/posts" class="{{isActiveRoute 'posts'}}")
-            // i.large.inbox.icon
             +i name='blog'
             span.mobile.hidden posts
         a.icon.item.zoomer(href="/sources" class="{{isActiveRoute 'sources'}}")
-            // i.large.inbox.icon
             +i name='field-and-tractor'
             span.mobile.hidden sources
         a.icon.item.zoomer(href="/partners" class="{{isActiveRoute 'partners'}}")
-            // i.large.inbox.icon
             +i name='farm'
             span.mobile.hidden partners
         a.icon.item.zoomer(href="/catering" class="{{isActiveRoute 'catering'}}")
-            // i.large.inbox.icon
             +i name='new-years-eve'
             span.mobile.hidden catering
         a.icon.item.zoomer(href="/events" class="{{isActiveRoute 'events'}}")
-            // i.large.inbox.icon
             +i name='calendar'
             span.mobile.hidden events
         a.icon.item.zoomer(href="/recipes" class="{{isActiveRoute 'recipes'}}")
-            // i.large.inbox.icon
             +i name='beer-recipe'
             span.mobile.hidden recipes
         a.icon.item.zoomer(href="/tribes" class="{{isActiveRoute 'tribes'}}")
-            // i.large.inbox.icon
             +i name='campfire'
             span.mobile.hidden tribes
         a.icon.item.zoomer(href="/classes" class="{{isActiveRoute 'classes'}}")
-            // i.large.inbox.icon
             +i name='university'
             span.mobile.hidden classes
         a.icon.item.zoomer(href="/subscriptions" class="{{isActiveRoute 'subscriptions'}}")
-            // i.large.inbox.icon
             +i name='clock'
             span.mobile.hidden subscriptions
 
