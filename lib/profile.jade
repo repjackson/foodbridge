@@ -1,101 +1,108 @@
 template(name='user_layout')
     +nav
-    with current_user
-        img.ui.image.checkin_banner(src="{{c.url image_id2 width=1000 }}")
-        .ui.stackable.padded.grid
-            .row
-                .four.wide.column.scrolling
-                    a.ui.fluid.compact.button.fly_left(href='/users')
-                        i.chevron.left.icon
-                        +i name='groups'
-                        |users
-                    .spacer
-                    a.item.mobile.hidden(href="/user/#{username}")
-                        img.ui.centered.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
-                    .ui.center.aligned.header.mobile.hidden
-                        strong #{name}
-                        // strong #{first_name} #{last_name}
-                        | @#{username}        
-                    a.mobile.only(href="/user/#{username}")
-                        img.ui.tiny.inline.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
-                    .ui.inline.header.mobile.only
-                        strong #{name}
-                        // strong #{first_name} #{last_name}
-                        | @#{username}        
-                    // .spacer
-                    // a(href="/user/#{username}")
-                    a.ui.inline.header(href="/user/#{username}/credit" title='credit')
-                        +i name='coins'
-                        |#{user.points}p
-                    if is_current_user
-                        a.ui.button(href="/user/#{username}/edit" title='profile settings')
-                            i.cog.icon
-                            |edit profile
-                        // a.ui.button.logout_other_clients(href="#" title='logout other clients')
-                        //     i.globe.icon
-                        //     |log out other clients
-                    else if currentUser.admin_mod
-                        a.ui.button(href="/user/#{username}/edit" title='profile settings')
-                            +i name='settings' cl='ui avatar image'
-                            |edit profile
-                    // unless is_current_user
-                    //     +friend_button
-                    if is_current_user
-                        .ui.button.logout
-                            i.sign.out.alternate.icon
-                            |log out
-                    +array_view key='tags' label='tags' direct=true icon='tags'
-                    if link 
-                        a.ui.button(href=link target='_window')
-                            |app link
-                    if is_current_user
-                        +boolean_edit key='online' label='online' direct=true
-                        +text_edit key='current_status' label='status' icon='clock' direct=true
-                    else 
-                        if online 
-                            .ui.green.large.label 
-                                i.large.checkmark.icon
-                                |online
-                        else
-                            .ui.disabled.large.label 
-                                |offline
-                        if current_status
-                            .ui.small.header(title='status' )
-                                i.grey.clock.icon
-                                |!{current_status}
-                        a.ui.large.compact.basic.icon.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
-                            i.chat.large.blue.icon
-                            // | message
-                    if is_dev
-                        +print_this
-                .twelve.wide.column.scrolling
-                    // a.ui.compact.button(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
-                    //     // i.dashboard.icon
-                    //     +i name='dashboard'
-                    //     span.mobile.hidden dashboard
-                    // a.ui.compact.button(href="/user/#{username}/about" class="{{isActiveRoute 'user_about'}}" title="#{user.username} info")
-                    //     // i.info.icon
-                    //     +i name='info'
-                    //     span.mobile.hidden about
-                    // a.ui.compact.button(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
-                    //     // i.dollar.icon
-                    //     +i name='money'
-                    //     span.mobile.hidden credit
-                    // a.ui.compact.button(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}" title="#{user.username} events")
-                    //     // i.calendar.icon
-                    //     +i name='calendar'
-                    //     span.mobile.hidden events
-                    // a.ui.compact.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
-                    //     // i.chat.icon
-                    //     +i name='chat'
-                    //     span.mobile.hidden chat
-                    // a.ui.compact.button(href="/user/#{username}/delivery" class="{{isActiveRoute 'user_delivery'}}" title="#{user.username} badges")
-                    //     // i.certificate.icon
-                    //     +i name='car'
-                    //     span.mobile.hidden delivery
-                    // .spacer
-                    +yield    
-
+    #man.ui.bottom.attached.pushable.segment
+        // +topbar
+        +left_sidebar
+        +right_sidebar
+        // +cartbar
+        // +walletbar
+        #ain_area.global_conainer.pusher
+            with current_user
+                img.ui.image.checkin_banner(src="{{c.url image_id2 width=1000 }}")
+                .ui.stackable.padded.grid
+                    .row
+                        .four.wide.column.scrolling
+                            a.ui.fluid.compact.button.fly_left(href='/users')
+                                i.chevron.left.icon
+                                +i name='groups'
+                                |users
+                            .spacer
+                            a.item.mobile.hidden(href="/user/#{username}")
+                                img.ui.centered.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
+                            .ui.center.aligned.header.mobile.hidden
+                                strong #{name}
+                                // strong #{first_name} #{last_name}
+                                | @#{username}        
+                            a.mobile.only(href="/user/#{username}")
+                                img.ui.tiny.inline.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
+                            .ui.inline.header.mobile.only
+                                strong #{name}
+                                // strong #{first_name} #{last_name}
+                                | @#{username}        
+                            // .spacer
+                            // a(href="/user/#{username}")
+                            a.ui.inline.header(href="/user/#{username}/credit" title='credit')
+                                +i name='coins'
+                                |#{user.points}p
+                            if is_current_user
+                                a.ui.button(href="/user/#{username}/edit" title='profile settings')
+                                    i.cog.icon
+                                    |edit profile
+                                // a.ui.button.logout_other_clients(href="#" title='logout other clients')
+                                //     i.globe.icon
+                                //     |log out other clients
+                            else if currentUser.admin_mod
+                                a.ui.button(href="/user/#{username}/edit" title='profile settings')
+                                    +i name='settings' cl='ui avatar image'
+                                    |edit profile
+                            // unless is_current_user
+                            //     +friend_button
+                            if is_current_user
+                                .ui.button.logout
+                                    i.sign.out.alternate.icon
+                                    |log out
+                            +array_view key='tags' label='tags' direct=true icon='tags'
+                            if link 
+                                a.ui.button(href=link target='_window')
+                                    |app link
+                            if is_current_user
+                                +boolean_edit key='online' label='online' direct=true
+                                +text_edit key='current_status' label='status' icon='clock' direct=true
+                            else 
+                                if online 
+                                    .ui.green.large.label 
+                                        i.large.checkmark.icon
+                                        |online
+                                else
+                                    .ui.disabled.large.label 
+                                        |offline
+                                if current_status
+                                    .ui.small.header(title='status' )
+                                        i.grey.clock.icon
+                                        |!{current_status}
+                                a.ui.large.compact.basic.icon.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
+                                    i.chat.large.blue.icon
+                                    // | message
+                            if is_dev
+                                +print_this
+                        .twelve.wide.column.scrolling
+                            // a.ui.compact.button(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
+                            //     // i.dashboard.icon
+                            //     +i name='dashboard'
+                            //     span.mobile.hidden dashboard
+                            // a.ui.compact.button(href="/user/#{username}/about" class="{{isActiveRoute 'user_about'}}" title="#{user.username} info")
+                            //     // i.info.icon
+                            //     +i name='info'
+                            //     span.mobile.hidden about
+                            // a.ui.compact.button(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
+                            //     // i.dollar.icon
+                            //     +i name='money'
+                            //     span.mobile.hidden credit
+                            // a.ui.compact.button(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}" title="#{user.username} events")
+                            //     // i.calendar.icon
+                            //     +i name='calendar'
+                            //     span.mobile.hidden events
+                            // a.ui.compact.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
+                            //     // i.chat.icon
+                            //     +i name='chat'
+                            //     span.mobile.hidden chat
+                            // a.ui.compact.button(href="/user/#{username}/delivery" class="{{isActiveRoute 'user_delivery'}}" title="#{user.username} badges")
+                            //     // i.certificate.icon
+                            //     +i name='car'
+                            //     span.mobile.hidden delivery
+                            // .spacer
+                            +yield    
+        
 
            
 template(name='user_credit')

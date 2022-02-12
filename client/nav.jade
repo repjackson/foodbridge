@@ -12,24 +12,24 @@ template(name='nav')
             // i.large.home.icon
             // img.ui.tiny.image(src="{{c.url 'fblogo' gravity='face' crop='fill'}}")
             span.mobile.hidden foodbridge
-        a.icon.item.zoomer(href="/mission" class="{{isActiveRoute 'mission'}}")
+        a.icon.item.zoomer.mobile.hidden(href="/mission" class="{{isActiveRoute 'mission'}}")
             +i name='mission-of-a-company'
             // i.large.inbox.icon
             // +i name='blog'
             span.mobile.hidden mission
-        a.icon.item.zoomer(href="/prepared" class="{{isActiveRoute 'prepared'}}")
+        a.icon.item.zoomer.mobile.hidden(href="/prepared" class="{{isActiveRoute 'prepared'}}")
             // i.large.inbox.icon
             +i name='meal'
             span.mobile.hidden prepared meals
-        a.icon.item.zoomer(href="/products" class="{{isActiveRoute 'products'}}")
+        a.icon.item.zoomer.mobile.hidden(href="/products" class="{{isActiveRoute 'products'}}")
             // i.large.inbox.icon
             +i name='shop'
             span.mobile.hidden products
-        a.icon.item.zoomer(href="/chefs" class="{{isActiveRoute 'chefs'}}")
+        a.icon.item.zoomer.mobile.hidden(href="/chefs" class="{{isActiveRoute 'chefs'}}")
             // i.large.inbox.icon
             +i name='chef-hat'
             span.mobile.hidden meet our chefs
-        a.icon.item.zoomer(href="/users" class="{{isActiveRoute 'users'}}")
+        a.icon.item.zoomer.mobile.hidden(href="/users" class="{{isActiveRoute 'users'}}")
             // i.large.inbox.icon
             +i name='groups'
             span.mobile.hidden community
@@ -210,13 +210,13 @@ template(name='right_sidebar')
 template(name='left_sidebar')
     .ui.left.sidebar.vertical.menu.smallscroll
         // a.item.toggle_leftbar.no_blink(href="/" class="{{isActiveRoute '/'}}")
-        //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |One
         // a.item.set_member.toggle_leftbar.no_blink(href="/m/member" class="{{isActivePath 'm/member'}}" title='players')
         a.item.toggle_leftbar.mobile.only(href='/' class="{{isActivePath '/'}}" title='home')
             // +i name='food'
+            img.ui.compact.image(src="{{c.url 'fblogo' }}")
             // i.home.icon
-            img.ui.small.centered.image(src="https://nudefoodsmarket.com/wp-content/uploads/2021/03/logo-smaller-300x87.jpg")
+            // img.ui.small.centered.image(src="https://nudefoodsmarket.com/wp-content/uploads/2021/03/logo-smaller-300x87.jpg")
             // span.mobile.hidden nude foods market
         // .search.item(title='search')
         //     .ui.icon.transparent.input
