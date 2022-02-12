@@ -64,26 +64,26 @@ head
 template(name='full')
     img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange'}}")
     // +nav
-    // #man.ui.bottom.attached.pushable.segment
-    //     // +topbar
-    //     // +left_sidebar
-    //     // +right_sidebar
-    //     // +cartbar
-    //     // +walletbar
-    //     #ain_area.global_conainer.pusher
-    +yield
-    +footer
+    #man.ui.bottom.attached.pushable.segment
+        // +topbar
+        +left_sidebar
+        +right_sidebar
+        // +cartbar
+        // +walletbar
+        #ain_area.global_conainer.pusher
+            +yield
+            +footer
     
 template(name='layout')
     +nav
     img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}")
-    // #main.ui.bottom.attached.pushable.segment
-    //     +topbar
-    //     +left_sidebar
-    //     +right_sidebar
-    // #ain_area.global_conainer.pusher
-    +yield
-    +footer
+    #main.ui.bottom.attached.pushable.segment
+        // +topbar
+        +left_sidebar
+        +right_sidebar
+        #ain_area.global_conainer.pusher
+            +yield
+            +footer
 
 
 template(name='mlayout')

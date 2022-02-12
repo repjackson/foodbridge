@@ -8,7 +8,48 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'my_cart_products', ->
 
     Template.nav.onRendered ->
+        Meteor.setTimeout ->
+            $('.menu .item')
+                .popup()
+            $('.ui.left.sidebar')
+                .sidebar({
+                    context: $('.bottom.segment')
+                    transition:'overlay'
+                    mobileTransition:'scale'
+                    exclusive:true
+                    duration:200
+                    scrollLock:true
+                })
+                .sidebar('attach events', '.toggle_leftbar')
+        , 3000
+        Meteor.setTimeout ->
+            $('.ui.rightbar')
+                .sidebar({
+                    context: $('.bottom.segment')
+                    transition:'overlay'
+                    mobileTransition:'overlay'
+                    exclusive:true
+                    duration:200
+                    scrollLock:true
+                })
+                .sidebar('attach events', '.toggle_rightbar')
+        , 2000
+        Meteor.setTimeout ->
+            $('.ui.topbar.sidebar')
+                .sidebar({
+                    context: $('.bottom.segment')
+                    transition:'push'
+                    mobileTransition:'push'
+                    exclusive:true
+                    duration:200
+                    scrollLock:true
+                })
+                .sidebar('attach events', '.toggle_topbar')
+        , 2000
+        
     Template.nav.events
+        'click .toggle_leftbar': ->
+            console.log 'hi'
         'click .toggle_admin_mode': ->
             Meteor.users.update Meteor.userId(),
                 $set:admin_mode:!Meteor.user().admin_mode

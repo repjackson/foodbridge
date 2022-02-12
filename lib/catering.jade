@@ -1,7 +1,12 @@
 template(name='catering')
     .ui.stackable.padded.grid
         .sixteen.wide.column
-            .ui.header catering
+            .ui.inline.header 
+                +i name='new-years-eve'
+                |catering
+            .ui.large.green.button.new_order
+                i.large.plus.icon
+                |new order
             +catering_orders
             
             
@@ -9,8 +14,8 @@ template(name='catering_orders')
     .ui.stackable.padded.grid
         .sixteen.wide.column
             .ui.inline.header 
-                +i name='campfire'
-                |catering_orders
+                +i name='list'
+                |catering orders
             +add_model_button model='catering_order'
             // .ui.left.icon.search.small.input
             //     i.search.icon.refresh_tags
@@ -54,15 +59,15 @@ template(name='catering_orders')
 
 template(name='catering_order_card')
     .ui.card.zoomer
+        .ui.header #{date}
         if image_id
             a.fly_right(href="/catering_order/#{_id}")
                 img.ui.image(src="{{c.url image_id width=400 height=400}}")
         .content
             a.ui.header.fly_right(href="/catering_order/#{_id}")
                 |#{title}
-            |#{member_ids.length} members
             .smallscroll
-                |!{description}
+                |!{notes}
             //+ismall name='tags' cl='ui inline image'
             each ten_tags
                 .ui.basic.label #{this}
@@ -92,16 +97,21 @@ template(name='catering_order_edit')
     with current_doc
         .ui.stackable.padded.grid
             .row
-                .five.wide.column.scrolling
+                .eight.wide.column.scrollin
                     .ui.header 
                         |edit catering_order
-                    a.ui.big.icon.fluid.green.button(href="/catering_order/#{_id}" title='save')
+                    +text_edit key='title' label='title' icon='marker' direct=true
+                    a.ui.big.fluid.green.button(href="/catering_order/#{_id}" title='save')
                         i.checkmark.large.icon
+                        |save
                     +remove_button
                     +image_edit key='image_id' label='image' direct=true
-                .six.wide.column.scrolling
-                    +html_edit key='description' label='content' icon='content' direct=true
-                .five.wide.column.scrolling
+                .eight.wide.column.scrollin
+                    +date_edit key='date' label='date' icon='calendar' direct=true
+                    +text_edit key='location' label='location' icon='marker' direct=true
+                    +datetime_edit key='start_datetime' label='start date/time' icon='calendar' direct=true
+                    +datetime_edit key='end_datetime' label='start date/time' icon='calendar' direct=true
+                    +html_edit key='notes' label='notes' icon='content' direct=true
                     +array_edit key='tags' label='tags' icon='tags' direct=true
 
                     
@@ -116,8 +126,8 @@ template(name='catering_order_view')
                         |#{title}
                     a.ui.circular.basic.button(href="/catering_orders")
                         i.left.chevron.icon
-                        +i name='campfire' cl='ui mini inline image'
-                        |catering_orders
+                        +i name='new-years-eve' cl='ui mini inline image'
+                        |catering orders
                     if can_edit
                         a.ui.circular.basic.icon.button(href="/catering_order/#{_id}/edit")
                             i.setting.large.icon
@@ -131,28 +141,20 @@ template(name='catering_order_view')
                         .spacer
                     div
                     .spacer
-                    if address
+                    if location
                         a.ui.compact.basic.circular.button(href=address_link target='_window')
                             i.marker.icon
-                            |#{address}
+                            |#{location}
                     +viewing
                     if in_dev 
                         +print_this
                     +catering_order_history
                 .five.wide.column
-                    +html_view key='description' icon='content' label='description'
+                    +html_view key='notes' icon='content' label='notes'
                     // a.ui.basic.button(href="/user/#{leader}")
                     //     |#{leader}
                 .five.wide.column
-                    if is_member
-                        .ui.button.leave(title='click to leave')
-                            i.checkmark.icon
-                            |member
-                    else 
-                        .ui.button.join(title='')
-                            i.user.plus.icon
-                            |join
-                    // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
+                    .ui.header status: #{status}
                     +comments
     
 template(name='user_catering_orders')
