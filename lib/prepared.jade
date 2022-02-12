@@ -1,0 +1,24 @@
+template(name='prepared')
+    .ui.stackable.padded.grid 
+        .ten.wide.column
+            +page key='prepared'
+            .ui.big.green.button
+                |find out which package works for you
+            if currentUser.admin_mode
+                .ui.icon.button.add_plan
+                    i.plus.icon
+            .ui.header menu of the week
+        .six.wide.column
+            .ui.cards 
+                each plan_docs
+                    +plan_card
+                
+                
+template(name='plan_card')
+    .ui.card 
+        .content
+            .ui.header #{title}
+            if currentUser.admin_mode
+                +text_edit key='title' direct=true
+            .ui.button.sign_up
+                |sign up
