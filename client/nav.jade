@@ -1,6 +1,6 @@
 template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
-    #topnav.topnav.ui.attached.borderless.inverted.menu.hscroll
+    #topnav.topnav.ui.attached.borderless.menu.hscroll
         // if is_loading
         //     .icon.item
         //         i.big.loading.grey.refresh.icon.cancel
@@ -8,10 +8,10 @@ template(name='nav')
         a.icon.item.toggle_leftbar
             i.large.bars.icon
         a.item.zoomer(href='/' class="{{isActivePath '/'}}" )
-            +i name='rope-bridge'
+            // +i name='rope-bridge'
             // i.large.home.icon
-            // img.ui.tiny.image(src="{{c.url 'fblogo' gravity='face' crop='fill'}}")
-            span.mobile.hidden foodbridge
+            img.ui.tiny.image(src="{{c.url 'fblogo' gravity='face' crop='fill'}}")
+            // span foodbridge
         a.icon.item.zoomer.mobile.hidden(href="/mission" class="{{isActiveRoute 'mission'}}")
             +i name='mission-of-a-company'
             // i.large.inbox.icon
@@ -57,7 +57,7 @@ template(name='nav')
             else
                 a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
                     i.large.outline.bell.icon
-            if cart_items 
+            if cart_items.length
                 .icon.item
                     i.shopping.cart.icon
                 // each cart_items
@@ -99,7 +99,7 @@ template(name='nav')
                     span.mobile.hidden login
             if session_is 'viewing_alerts'
                 +topbar
-    .ui.small.attached.inverted.borderless.menu.hscroll
+    .ui.small.attached.borderless.menu.hscroll
         a.icon.item.zoomer(href="/tasks" class="{{isActiveRoute 'tasks'}}")
             // i.large.inbox.icon
             +i name='tasks'

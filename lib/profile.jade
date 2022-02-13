@@ -163,9 +163,10 @@ template(name='locate_me')
 template(name='user_dashboard')
     // +user_about
     // .ui.hidden.divider
-    +latest_user_activity    
     .ui.stackable.grid
         .three.column.row
+            .column
+                +latest_user_activity    
             .column
                 .ui.header 
                     +i name='campfire'    
