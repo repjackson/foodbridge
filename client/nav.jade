@@ -212,12 +212,12 @@ template(name='left_sidebar')
         // a.item.toggle_leftbar.no_blink(href="/" class="{{isActiveRoute '/'}}")
         //     |One
         // a.item.set_member.toggle_leftbar.no_blink(href="/m/member" class="{{isActivePath 'm/member'}}" title='players')
-        a.item.toggle_leftbar.mobile.only(href='/' class="{{isActivePath '/'}}" title='home')
-            // +i name='food'
-            img.ui.compact.image(src="{{c.url 'fblogo' }}")
-            // i.home.icon
-            // img.ui.small.centered.image(src="https://nudefoodsmarket.com/wp-content/uploads/2021/03/logo-smaller-300x87.jpg")
-            // span.mobile.hidden nude foods market
+        // a.item.toggle_leftbar.mobile.only(href='/' class="{{isActivePath '/'}}" title='home')
+        //     // +i name='food'
+        //     img.ui.compact.image(src="{{c.url 'fblogo' }}")
+        //     // i.home.icon
+        //     // img.ui.small.centered.image(src="https://nudefoodsmarket.com/wp-content/uploads/2021/03/logo-smaller-300x87.jpg")
+        //     // span.mobile.hidden nude foods market
         // .search.item(title='search')
         //     .ui.icon.transparent.input
         //         i.search.icon
@@ -235,23 +235,12 @@ template(name='left_sidebar')
         a.item.toggle_leftbar(href='/sources' class="{{isActivePath '/sources'}}")
             +i name='field-and-tractor'
             | #{source_count} sources
-        a.item.toggle_leftbar(href='/mishi' class="{{isActivePath '/mishi'}}")
-            +i name='money'
-            | mishi orders
-        a.item.toggle_leftbar(href='/transfers' class="{{isActivePath '/transfers'}}")
-            +i name='donate'
-            | point transfers
-        a.icon.item.toggle_leftbar(href='/labels' class="{{isActivePath '/labels'}}" title='labels')
-            +i name='tags'
-            |labels
         a.item.toggle_leftbar(href='/recipes' class="{{isActivePath '/recipes'}}")
             +i name='cookbook'
             |#{recipe_count} recipes
         a.item.toggle_leftbar.zoomer(href='/trips' class="{{isActivePath '/trips'}}")
             +i name='bicycle'
             |#{recipe_count} trips
-        //         // i.newspaper.icon
-        //         strong.mobile.hidden get involved
         a.item.toggle_leftbar.zoomer(href='/contact' class="{{isActivePath '/contact'}}" title='news')
             +i name='phone'
             | contact

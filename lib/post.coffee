@@ -153,7 +153,6 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.publish 'user_posts', (username)->
         user = Meteor.users.findOne username:username
-        
         Docs.find 
             model:'post'
             _author_id:user._id
